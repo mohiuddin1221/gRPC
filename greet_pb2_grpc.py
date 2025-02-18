@@ -40,6 +40,11 @@ class GreeterStub(object):
                 request_serializer=greet__pb2.HelloRequest.SerializeToString,
                 response_deserializer=greet__pb2.HelloReply.FromString,
                 _registered_method=True)
+        self.User = channel.unary_unary(
+                '/greet.Greeter/User',
+                request_serializer=greet__pb2.UserRequest.SerializeToString,
+                response_deserializer=greet__pb2.UserReply.FromString,
+                _registered_method=True)
         self.ParrotSaysHello = channel.unary_stream(
                 '/greet.Greeter/ParrotSaysHello',
                 request_serializer=greet__pb2.HelloRequest.SerializeToString,
@@ -62,6 +67,13 @@ class GreeterServicer(object):
     """
 
     def SayHello(self, request, context):
+        """Unary
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def User(self, request, context):
         """Unary
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -96,6 +108,11 @@ def add_GreeterServicer_to_server(servicer, server):
                     servicer.SayHello,
                     request_deserializer=greet__pb2.HelloRequest.FromString,
                     response_serializer=greet__pb2.HelloReply.SerializeToString,
+            ),
+            'User': grpc.unary_unary_rpc_method_handler(
+                    servicer.User,
+                    request_deserializer=greet__pb2.UserRequest.FromString,
+                    response_serializer=greet__pb2.UserReply.SerializeToString,
             ),
             'ParrotSaysHello': grpc.unary_stream_rpc_method_handler(
                     servicer.ParrotSaysHello,
@@ -141,6 +158,33 @@ class Greeter(object):
             '/greet.Greeter/SayHello',
             greet__pb2.HelloRequest.SerializeToString,
             greet__pb2.HelloReply.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def User(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/greet.Greeter/User',
+            greet__pb2.UserRequest.SerializeToString,
+            greet__pb2.UserReply.FromString,
             options,
             channel_credentials,
             insecure,

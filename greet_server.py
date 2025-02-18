@@ -25,6 +25,10 @@ class Greetservicer(greet_pb2_grpc.GreeterServicer):
             yield hello_reply
             time.sleep(3)
 
+    def User(self, request, context):
+        response_message = f"Hello {request.name}, your email is {request.email}, your age is {request.age}."
+        return greet_pb2.UserReply(message=response_message)
+
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))

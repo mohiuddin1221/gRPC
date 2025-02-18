@@ -18,8 +18,16 @@ def run_parrot_says_hello():
         for response in responses:
            print("Greeter client received: " + response.message)
 
+def run_user_information():
+    with grpc.insecure_channel('localhost:50051') as channel:
+        stub = greet_pb2_grpc.GreeterStub(channel)
+        request = greet_pb2.UserRequest(name="XYZ", email="xyz@example.com", age=25)
+        response = stub.User(request)
+        print("Server Response:", response.message)
+
 
 if __name__ == "__main__":
     run_sayhello()
     run_parrot_says_hello()
+    run_user_information()
 

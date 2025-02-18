@@ -26,3 +26,19 @@ class DelayedReply(_message.Message):
     message: str
     request: _containers.RepeatedCompositeFieldContainer[HelloRequest]
     def __init__(self, message: _Optional[str] = ..., request: _Optional[_Iterable[_Union[HelloRequest, _Mapping]]] = ...) -> None: ...
+
+class UserRequest(_message.Message):
+    __slots__ = ("name", "email", "age")
+    NAME_FIELD_NUMBER: _ClassVar[int]
+    EMAIL_FIELD_NUMBER: _ClassVar[int]
+    AGE_FIELD_NUMBER: _ClassVar[int]
+    name: str
+    email: str
+    age: int
+    def __init__(self, name: _Optional[str] = ..., email: _Optional[str] = ..., age: _Optional[int] = ...) -> None: ...
+
+class UserReply(_message.Message):
+    __slots__ = ("message",)
+    MESSAGE_FIELD_NUMBER: _ClassVar[int]
+    message: str
+    def __init__(self, message: _Optional[str] = ...) -> None: ...

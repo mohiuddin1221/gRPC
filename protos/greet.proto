@@ -7,6 +7,9 @@ service Greeter {
 	// Unary
 	rpc SayHello (HelloRequest) returns (HelloReply);
 
+	//Unary
+	rpc User(UserRequest) returns (UserReply);
+
 	// Server Streaming
 	rpc ParrotSaysHello (HelloRequest) returns (stream HelloReply);
 	
@@ -31,4 +34,15 @@ message HelloReply {
 message DelayedReply {
 	string message = 1;
 	repeated HelloRequest request = 2;
+}
+
+message UserRequest{
+	string name  = 1;
+	string email = 2;
+	int32 age = 3;
+	
+}
+message UserReply{
+	string message = 1;
+
 }
